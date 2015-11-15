@@ -1,0 +1,19 @@
+body {
+  font-family: arial, helvetica, sans-serif;
+}
+
+ol {
+  list-style-position: inside;
+}
+
+li {
+  border: 1px solid black;
+  width:200px;
+  margin-top: -1px;
+  padding:4px;
+}
+.task-name {
+   display: inline-block;
+   width: 150px;
+
+}
