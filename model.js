@@ -1,5 +1,5 @@
 App.TodoList = function TodoList(){
-  this.tasks = [];
+  this.loadTasks();
 };
 
 App.TodoList.prototype.addTask = function (task) {
@@ -9,8 +9,11 @@ App.TodoList.prototype.addTask = function (task) {
 
 App.TodoList.prototype.loadTasks = function() {
   var stored = app.storage.retrieveList();
-  console.log(stored);
-  this.tasks = stored.tasks;
+  if (stored) {
+    this.tasks = stored.tasks;
+  } else {
+    this.tasks = [];
+  }
 }
 
 App.TodoList.prototype.updateTask = function(args) {
@@ -21,7 +24,7 @@ App.TodoList.prototype.updateTask = function(args) {
     target.done =args.done;
     app.storage.saveList(this);
   } else {
-    console.log('Could not find id ' + args.id);
+    alert('Could not find task with id ' + args.id);
   }
 }
 

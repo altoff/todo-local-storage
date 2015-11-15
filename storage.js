@@ -35,9 +35,11 @@ app.storage = (function(){
   StorageProvider.prototype.retrieveList = function() {
     var json = localStorage.getItem(KEY);
     var stored = JSON.parse(json);
-    stored.tasks.forEach(function(ele){
-      assignId(ele);
-    });
+    if (stored) {
+      stored.tasks.forEach(function(ele){
+        assignId(ele);
+      });
+    }
     return stored;
   }
 
