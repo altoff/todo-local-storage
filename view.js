@@ -5,13 +5,23 @@ App.View = function View(element) {
 
 App.View.prototype.addEventListeners = function() {
     var form = document.getElementById('new_task_form');
-    form.addEventListener('submit', function(event) {
-      console.log(event);
+
+    var handleSubmit = function(event) {
       event.preventDefault();
       var name = document.getElementById('task_name').value;
       var done = document.getElementById('task_done').checked;
       this.controller.addTask({taskName: name, done: done});
-   }.bind(this));
+    };
+
+    var handleCheckbox = function(event) {
+      if (event.target.dataset.taskId) {
+        this.controller.updateTask({id: event.target.dataset.taskId, done:event.target.checked });
+      }
+    };
+
+    form.addEventListener('submit', handleSubmit.bind(this));
+    this.element.addEventListener('change', handleCheckbox.bind(this));
+
 };
 
 App.View.prototype.drawList = function(todoList) {
@@ -22,7 +32,9 @@ App.View.prototype.drawList = function(todoList) {
         html += '<li><span class="task-name">';
         html += task.taskName;
         html += '</span><span class="task-done">';
-        html += '<input type="checkbox" ';
+        html += '<input data-task-id="';
+        html += task.id;
+        html += '" class="cb-done" type="checkbox" ';
         html += task.done ? 'checked="checked" >' : ' >';
         html += '</span></li>';
       }
